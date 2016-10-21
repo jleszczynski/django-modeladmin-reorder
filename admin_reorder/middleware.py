@@ -20,6 +20,10 @@ class ModelAdminReorder(MiddlewareMixin):
         self.app_list = app_list
 
         self.config = getattr(settings, 'ADMIN_REORDER', None)
+        
+        if callable(self.config):
+            self.config = self.config()
+            
         if not self.config:
             # ADMIN_REORDER settings is not defined.
             raise ImproperlyConfigured('ADMIN_REORDER config is not defined.')
